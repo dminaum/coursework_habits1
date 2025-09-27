@@ -1,25 +1,26 @@
-# habits/telegram_bot.py
+from dotenv import load_dotenv
 import os
+import django
+
+load_dotenv()
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+django.setup()
+
 import re
 from datetime import time as dt_time
 
-import django
 import telebot
 from django.contrib.auth import get_user_model
 from django.utils import timezone
-from dotenv import load_dotenv
 from telebot import types
 
 from habits.models import Habit
 from habits.serializers import HabitSerializer
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
-django.setup()
-
 
 User = get_user_model()
 
-load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 bot = telebot.TeleBot(BOT_TOKEN, parse_mode="HTML")
 
