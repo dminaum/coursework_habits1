@@ -49,8 +49,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "drf_yasg",
     "habits",
-    "users",
-    "docker"
+    "users"
 ]
 
 AUTH_USER_MODEL = "users.User"
