@@ -69,10 +69,21 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
-      - name: Copy project files to server
+      - name: Ensure deploy dir exists
         run: |
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude '__pycache__' . \
-            ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:${{ secrets.DEPLOY_DIR }}
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} \
+            "mkdir -p ${{ secrets.DEPLOY_DIR }}"
+
+      - name: Copy project files to server (no owner/group preserve)
+        run: |
+          rsync -rltvz \
+            --delete \
+            --exclude '__pycache__' \
+            --exclude '.git' \
+            --exclude '.venv' \
+            -e "ssh -o StrictHostKeyChecking=no" \
+            ./ \
+            ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:${{ secrets.DEPLOY_DIR }}/
 
       - name: Install dependencies on server
         run: |
