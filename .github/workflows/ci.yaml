@@ -29,6 +29,9 @@ jobs:
 
   tests:
     runs-on: ubuntu-latest
+    env:
+      USE_SQLITE_FOR_TESTS: "1"
+      SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -50,4 +53,4 @@ jobs:
 
       - name: Run tests
         run: |
-          USE_SQLITE_FOR_TESTS=1 poetry run pytest
+          poetry run pytest
