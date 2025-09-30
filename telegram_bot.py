@@ -2,11 +2,6 @@ from dotenv import load_dotenv
 import os
 import django
 
-load_dotenv()
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
-django.setup()
-
 import re
 from datetime import time as dt_time
 
@@ -17,6 +12,11 @@ from telebot import types
 
 from habits.models import Habit
 from habits.serializers import HabitSerializer
+
+load_dotenv()
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+django.setup()
 
 
 User = get_user_model()
@@ -114,7 +114,7 @@ def clear_state(chat_id: int):
 
 @bot.message_handler(commands=["start", "help"])
 def handle_start(message: types.Message):
-    user = get_or_create_user_by_chat(message.chat.id)
+    get_or_create_user_by_chat(message.chat.id)
     clear_state(message.chat.id)
     bot.reply_to(
         message,

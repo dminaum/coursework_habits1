@@ -193,3 +193,6 @@ SWAGGER_SETTINGS = {
         },
     },
 }
+
+if os.getenv("USE_SQLITE_FOR_TESTS") == "1":
+    DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}}

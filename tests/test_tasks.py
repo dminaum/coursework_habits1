@@ -21,7 +21,7 @@ def test_send_due_habits(monkeypatch, user):
     monkeypatch.setattr(tasks, "_send_tg", fake_send_tg)
     monkeypatch.setattr(tasks.timezone, "localtime", lambda: fixed_now)
 
-    h = Habit.objects.create(
+    Habit.objects.create(
         user=user,
         place="p",
         time="08:15",
