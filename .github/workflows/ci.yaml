@@ -76,7 +76,7 @@ jobs:
 
       - name: Copy project files to server (no owner/group preserve)
         run: |
-          rsync -rltvz \
+          rsync -rlvz \
             --exclude '__pycache__' \
             --exclude '.git' \
             --exclude '.venv' \
