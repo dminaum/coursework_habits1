@@ -75,13 +75,24 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} \
             "mkdir -p ${{ secrets.DEPLOY_DIR }}"
-
+      - name: Prepare server (fix ownership & perms)
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+            set -e
+            sudo mkdir -p ${{ secrets.DEPLOY_DIR }}
+            # Передаём всё пользователю деплоя
+            sudo chown -R "$USER:$USER" ${{ secrets.DEPLOY_DIR }}
+            # На всякий случай: директориям — x, файлам — rw
+            find ${{ secrets.DEPLOY_DIR }} -type d -exec chmod u+rwx {} \;
+            find ${{ secrets.DEPLOY_DIR }} -type f -exec chmod u+rw {} \;
+          EOF
       - name: Copy project files to server (no owner/group preserve)
         run: |
           rsync -rlvz \
             --exclude '__pycache__' \
             --exclude '.git' \
             --exclude '.venv' \
+            --omit-dir-times --no-perms --no-owner --no-group \
             -e "ssh -o StrictHostKeyChecking=no" \
             ./ \
             ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:${{ secrets.DEPLOY_DIR }}/
