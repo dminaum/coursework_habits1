@@ -81,7 +81,7 @@ def list_habits_text(user: User) -> tuple[str, list[Habit]]:
     habits = list(Habit.objects.filter(user=user).order_by("time", "id"))
     if not habits:
         return "🤷‍♀️ Нет привычек к выполнению", []
-    lines = [f"📃 ПРОВЕРКА Информация о привычках пользователя {user.email or user.username}:\n"]
+    lines = [f"📃 Информация о привычках пользователя {user.email or user.username}:\n"]
     for h in habits:
         reward_txt = h.reward if h.reward else "Нет вознаграждения"
         kind = "приятная" if h.is_pleasant else "полезная"
