@@ -7,8 +7,7 @@ readme = "README.md"
 packages = [
   { include = "config" },
   { include = "habits" },
-  { include = "users" },
-  { include = "tg_gateway" }
+  { include = "users" }
 ]
 
 [tool.poetry.dependencies]
