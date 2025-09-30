@@ -88,4 +88,4 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
             cd ${{ secrets.DEPLOY_DIR }}
-            docker compose up --force-recreate -d
+            sudo docker compose up --force-recreate -d
