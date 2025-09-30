@@ -50,4 +50,4 @@ jobs:
 
       - name: Run tests
         run: |
-          USE_SQLITE_FOR_TESTS=1 pytest
+          USE_SQLITE_FOR_TESTS=1 poetry run pytest
