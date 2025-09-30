@@ -2,6 +2,11 @@ from dotenv import load_dotenv
 import os
 import django
 
+load_dotenv()
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+django.setup()
+
 import re
 from datetime import time as dt_time
 
@@ -12,11 +17,6 @@ from telebot import types
 
 from habits.models import Habit
 from habits.serializers import HabitSerializer
-
-load_dotenv()
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
-django.setup()
 
 
 User = get_user_model()

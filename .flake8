@@ -1,3 +1,5 @@
 [flake8]
 exclude = .git,__pycache__,migrations,venv,.venv,env
 max-line-length = 125
+per-file-ignores =
+    telegram_bot.py: E402
