@@ -7,11 +7,10 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import (TokenObtainPairView,
                                             TokenRefreshView)
 
-from habits.views import HabitViewSet, PublicHabitViewSet
+from habits.views import HabitViewSet
 
 router = DefaultRouter()
 router.register(r"habits", HabitViewSet, basename="habits")
-router.register(r"habits-public", PublicHabitViewSet, basename="habits-public")
 
 schema_view = get_schema_view(
     openapi.Info(title="Habits API", default_version="v1", description="Документация"),

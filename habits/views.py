@@ -1,4 +1,4 @@
-from rest_framework import mixins, permissions, viewsets
+from rest_framework import permissions, viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -13,6 +13,7 @@ def ping(_request):
 
 
 class HabitViewSet(viewsets.ModelViewSet):
+    queryset = Habit.objects.all()
     serializer_class = HabitSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwner]
 
@@ -21,11 +22,3 @@ class HabitViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-
-
-class PublicHabitViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    serializer_class = HabitSerializer
-    permission_classes = [permissions.AllowAny]
-
-    def get_queryset(self):
-        return Habit.objects.filter(is_public=True).order_by("id")
